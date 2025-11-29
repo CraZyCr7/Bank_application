@@ -33,6 +33,8 @@ public class User {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    @OneToMany(mappedBy = "owner")
+    private java.util.List<Account> accounts;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private Role role;
