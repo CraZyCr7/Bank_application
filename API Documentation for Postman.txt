@@ -1,0 +1,34 @@
+1. Register User
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+{
+  "username": "ayush",
+  "password": "Password123",
+  "fullName": "Ayush Kumar",
+  "email": "ayush@example.com"
+}
+
+2. Login
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+{
+  "username": "ayush",
+  "password": "Password123"
+}
+
+3. Open a Savings/Current Account
+http://localhost:8080/api/accounts/open  POST
+Content-Type: application/json
+Authorization: Bearer <your_jwt_token>
+{
+  "accountType": "SAVINGS",
+  "initialDeposit": 1000
+}
+JWT Token = given at the regitring time or login
+
+4. View All My Accounts
+http://localhost:8080/api/accounts/my GET
+
+5. View Specific Account
+http://localhost:8080/api/accounts/{id} GET
+Authorization: Bearer <your_jwt_token>
