@@ -1,3 +1,4 @@
+==============Registeringuser and Login ===============
 1. Register User
 POST http://localhost:8080/api/auth/register
 Content-Type: application/json
@@ -15,7 +16,7 @@ Content-Type: application/json
   "username": "ayush",
   "password": "Password123"
 }
-
+=================Opening Account ======================
 3. Open a Savings/Current Account
 http://localhost:8080/api/accounts/open  POST
 Content-Type: application/json
@@ -33,8 +34,9 @@ Authorization: Bearer <your_jwt_token>
 5. View Specific Account
 http://localhost:8080/api/accounts/{id} GET
 Authorization: Bearer <your_jwt_token>
-
-6.http://localhost:8080/api/beneficiaries POST
+==================Adding beneficiaries ==================
+6. Add Beneficiaries
+http://localhost:8080/api/beneficiaries POST
 Content-Type: application/json
 Authorization: Bearer <token>
 {
@@ -44,14 +46,17 @@ Authorization: Bearer <token>
   "ifsc": "HDFC0001234"
 }
 
-7. http://localhost:8080/api/beneficiaries/my GET
+7. Get All the benefiiaries
+ http://localhost:8080/api/beneficiaries/my GET
 Authorization: Bearer <token>
 
-8.http://localhost:8080/api/beneficiaries/{id}
+8. Get a particular beneficiaries
+http://localhost:8080/api/beneficiaries/{id}
 Authorization: Bearer <token>
-
+==================Transfers=============================
 // Create two different users and bank_accoiunt
-9.http://localhost:8080/api/transfers/imps  POST
+9. imps transfers 
+http://localhost:8080/api/transfers/imps  POST
 Authorization: Bearer {{token1}}
 Content-Type: application/json
 
@@ -61,4 +66,72 @@ Content-Type: application/json
   "amount": 500,
   "narration": "Demo IMPS test",
   "type": "IMPS"
+}
+10. NEFT Transfers is getting some issues.
+==================Card blocked and unblocked and applying===============
+11. Apply for the Card;
+http://localhost:8080/api/cards/apply
+Authorization: Bearer {{token} // Token from registering or login the users;
+Content-Type: application/json
+{
+  "cardType": "CREDIT",
+  "requestedCreditLimit": 50000,
+  "linkedAccountId": 200
+}
+
+12.Activate card
+http://localhost:8080/api/cards/activate/{id} // id == card id during Application of the card;.
+Authorization: Bearer {{token}
+No Body
+// It will change the status of the card issued to Active.
+
+13.Temporary block card
+http://localhost:8080/api/cards/block/{id}
+Authorization: Bearer {{token}
+Content-Type: application/json
+Body 
+{
+  "reason": "Lost wallet"
+}
+
+14.Unblock card
+http://localhost:8080/api/cards/unblock/{id}
+Authorization: Bearer {{token}
+No Body
+set status = ACTIVE
+
+15. Enable / Disable international usage
+http://localhost:8080/api/cards/{id}/international?enabled=true
+Authorization: Bearer {{token}
+NO Body
+
+16. Add Spending Charges in the Credit Card.
+http://localhost:8080/api/cards/add-charge
+{
+  "cardId": 5,
+  "amount": 2000,
+  "narration": "Amazon purchase"
+}
+
+17. Pay Credit Card Bill
+http://localhost:8080/api/cards/pay-bill
+Authorization: Bearer {{token}
+Content-Type: application/json
+{
+  "cardId": 5,
+  "fromAccountId": 200,
+  "amount": 1000.00
+}
+
+18. Pay with Debit Card as well;
+http://localhost:8080/api/cards/spend
+Authorization: Bearer {{token}
+Content-Type: application/json
+{
+  "cardId": 3,
+  "fromAccountId": 1,
+  "amount": 2000.00,
+  "merchant": "Amazon",
+  "international": false,
+  "narration": "Amazon order #1234"
 }
