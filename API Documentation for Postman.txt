@@ -69,7 +69,7 @@ Content-Type: application/json
 }
 10. NEFT Transfers is getting some issues.
 ==================Card blocked and unblocked and applying===============
-11. Apply for the Card;
+11. Apply for the Card;                  POST
 http://localhost:8080/api/cards/apply
 Authorization: Bearer {{token} // Token from registering or login the users;
 Content-Type: application/json
@@ -79,13 +79,13 @@ Content-Type: application/json
   "linkedAccountId": 200
 }
 
-12.Activate card
+12.Activate card  	POST              
 http://localhost:8080/api/cards/activate/{id} // id == card id during Application of the card;.
 Authorization: Bearer {{token}
 No Body
 // It will change the status of the card issued to Active.
 
-13.Temporary block card
+13.Temporary block card       POST
 http://localhost:8080/api/cards/block/{id}
 Authorization: Bearer {{token}
 Content-Type: application/json
@@ -94,18 +94,18 @@ Body
   "reason": "Lost wallet"
 }
 
-14.Unblock card
+14.Unblock card              POST
 http://localhost:8080/api/cards/unblock/{id}
 Authorization: Bearer {{token}
 No Body
 set status = ACTIVE
 
-15. Enable / Disable international usage
+15. Enable / Disable international usage       POST
 http://localhost:8080/api/cards/{id}/international?enabled=true
 Authorization: Bearer {{token}
 NO Body
 
-16. Add Spending Charges in the Credit Card.
+16. Add Spending Charges in the Credit Card.      POST
 http://localhost:8080/api/cards/add-charge
 {
   "cardId": 5,
@@ -113,8 +113,8 @@ http://localhost:8080/api/cards/add-charge
   "narration": "Amazon purchase"
 }
 
-17. Pay Credit Card Bill
-http://localhost:8080/api/cards/pay-bill
+17. Pay Credit Card Bill          POST
+http://localhost:8080/api/cards/pay-bill POST
 Authorization: Bearer {{token}
 Content-Type: application/json
 {
@@ -123,7 +123,7 @@ Content-Type: application/json
   "amount": 1000.00
 }
 
-18. Pay with Debit Card as well;
+18. Pay with Debit Card as well;       POST
 http://localhost:8080/api/cards/spend
 Authorization: Bearer {{token}
 Content-Type: application/json
@@ -135,3 +135,50 @@ Content-Type: application/json
   "international": false,
   "narration": "Amazon order #1234"
 }
+===================RD/FD Creations=========================
+19. Creating FD
+http://localhost:8080/api/deposits/fd  POST 
+Authorization: Bearer {{token}
+Content-Type: application/json
+{
+  "principal": 100000.00,
+  "annualInterestRate": 6.5,
+  "tenureMonths": 12,
+  "linkedAccountId": 200,
+  "autoRenew": true
+}
+
+20. List the FD's
+http://localhost:8080/api/deposits/fd/my    GET
+Authorization: Bearer {{token}
+
+21. View FD 
+http://localhost:8080/api/deposits/fd/{id}   GET
+Authorization: Bearer {{token}
+
+22. Cancel FD 
+http://localhost:8080/api/deposits/fd/{id}/cancel  POST
+Authorization: Bearer {{token}
+
+23. Create RD 
+http://localhost:8080/api/deposits/rd
+Authorization: Bearer {{token}
+Content-Type: application/json
+{
+  "monthlyInstallment": 2000.00,
+  "annualInterestRate": 6.5,
+  "tenureMonths": 12,
+  "linkedAccountId": 200
+}
+
+24. List the RD's
+http://localhost:8080/api/deposits/rd/my    GET
+Authorization: Bearer {{token}
+
+25. View RD 
+http://localhost:8080/api/deposits/rd/{id}   GET
+Authorization: Bearer {{token}
+
+26.Cancel RD 
+http://localhost:8080/api/deposits/rd/{id}/cancel  POST
+Authorization: Bearer {{token}
