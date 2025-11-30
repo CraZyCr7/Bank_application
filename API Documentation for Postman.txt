@@ -28,7 +28,37 @@ JWT Token = given at the regitring time or login
 
 4. View All My Accounts
 http://localhost:8080/api/accounts/my GET
+Authorization: Bearer <your_jwt_token>
 
 5. View Specific Account
 http://localhost:8080/api/accounts/{id} GET
 Authorization: Bearer <your_jwt_token>
+
+6.http://localhost:8080/api/beneficiaries POST
+Content-Type: application/json
+Authorization: Bearer <token>
+{
+  "beneficiaryName": "Rohit Sharma",
+  "accountNumber": "SB-20251130-000201",
+  "bankName": "MyBank",
+  "ifsc": "HDFC0001234"
+}
+
+7. http://localhost:8080/api/beneficiaries/my GET
+Authorization: Bearer <token>
+
+8.http://localhost:8080/api/beneficiaries/{id}
+Authorization: Bearer <token>
+
+// Create two different users and bank_accoiunt
+9.http://localhost:8080/api/transfers/imps  POST
+Authorization: Bearer {{token1}}
+Content-Type: application/json
+
+{
+  "fromAccountId": 200, // Account table id;
+  "toAccountId": 201, // Account table id;
+  "amount": 500,
+  "narration": "Demo IMPS test",
+  "type": "IMPS"
+}
